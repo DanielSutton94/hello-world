@@ -4,21 +4,21 @@
 #Checks whether x is a prime number
 isPrime <- function(x){
   
-  if (x == 1 || x == 2) {return(TRUE)}
+  if (x == 2) {return(TRUE)} # || is OR
   
   #Check if devisible by 2,3,...n-1
   for (j in 2:(x-1)){
-    if (x%%j == 0){return(FALSE)}
+    if (x%%j == 0){return(FALSE)} # %% is the modulo in R
   }
   return(TRUE)
   
 }
 
-#Main function for computing primes
+#Main function for computing prime factorisation
 primeFactors <- function(x){
   
   i <- 2
-  factorList <- c(1)
+  factorList <- c() # c() creates a vector
   
   while (i <= x){
     if (x%%i == 0 && isPrime(i)){
@@ -28,14 +28,8 @@ primeFactors <- function(x){
       i <- 2      #Reset the value of i
     
     } else {i <- i + 1}
-  
-
-   
   }
-  
   return(factorList)
-  
-  
 }
 
 
