@@ -1,5 +1,6 @@
 
 
+
 #Checks whether x is a prime number
 isPrime <- function(x){
   
@@ -36,3 +37,77 @@ primeFactors <- function(x){
   
   
 }
+
+
+
+
+
+
+########Fermat Factor
+
+fermatFactor <- function(n){
+  if(n%%2 != 1 ) stop('n must be an odd integer')
+  
+  a <- ceiling(sqrt(n))
+  b2 <- a*a - n
+  
+  while (sqrt(b2)%%1 != 0){
+    a <- a + 1
+    b2 <- a*a - n
+  }
+  print(a - sqrt(b2))
+  print(a + sqrt(b2))
+  
+  return(c(a - sqrt(b2),a + sqrt(b2)))
+}
+
+
+fermatPrimeFactor <- function(n){
+  
+  factorised <- FALSE
+  factorList <- c(n)
+  primeFactors <- c()
+  
+  
+  
+#  while(length(factorList) != length(newFactorList)){
+  while(!factorised){
+      
+    
+  newFactorList <- c() 
+  
+    for (i in length(factorList)){
+      
+      #This case deals with the positive values
+      if (factorList[i]%%2 == 0 && factorList[i] != 2){
+        newFactorList <- c(newFactorList,2, factorList[i]/2)
+        
+      }
+      else if(factorList[i] == 2) {
+        newFactorList <- c(newFactorList,2)
+      }
+      #This case deals with the negatives
+      else {
+      newFactorList <- c(newFactorList, fermatFactor(factorList[i]))
+      }
+    }
+    
+    factorList <- c()
+    primeCounter <- 0
+    for (j in 1:length(newFactorList)){
+      if (isPrime(newFactorList[j])){
+        primeFactors <- c(primeFactors,newFactorList[j])
+        primeCounter <- primeCounter + 1
+      }
+      else (factorList <- c(factorList,newFactorList[j]))
+      
+    }
+    
+    if (primeCounter == length(newFactorList)){factorised <- TRUE}
+    
+  }
+  
+  return(primeFactors)
+  
+}
+
